@@ -1,0 +1,58 @@
+using AlibabaCloud.OpenApiClient.Models;
+using AlibabaCloud.SDK.Dingtalkim_1_0;
+using AlibabaCloud.SDK.Dingtalkim_1_0.Models;
+using AlibabaCloud.TeaUtil.Models;
+using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
+using Volo.Abp.Json;
+
+namespace EasyAbp.NotificationService.Provider.Dingtalk.DingtalkCore;
+
+public class DingtalkRobot : IDingtalkRobot
+{
+    private Configuration _configuration;
+    private Client _client;
+    private IJsonSerializer _jsonSerializer;
+
+    public DingtalkRobot(IOptions<Configuration> options, IJsonSerializer jsonSerializer)
+    {
+        _jsonSerializer = jsonSerializer;
+        _configuration = options.Value;
+        _client = new Client(new Config()
+        {
+            Protocol = "https",
+            RegionId = "central"
+        });
+    }
+
+    /// <summary>
+    /// 单聊机器人发送互动卡片（普通版）,https://open.dingtalk.com/document/orgapp/robots-send-interactive-cards
+    /// </summary>
+    /// <summary>
+    /// 调试地址：https://open-dev.dingtalk.com/apiExplorer?spm=ding_open_doc.document.0.0.225e7369tLbSB3#/?devType=org&api=im_1.0%23SendRobotInteractiveCard
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="cardBizId">唯一标识一张卡片的外部ID，卡片幂等ID，可用于更新或重复发送同一卡片到多个群会话。</param>
+    /// <param name="cardData">卡片模板文本内容参数，卡片json结构体。https://card.dingtalk.com/card-builder?spm=ding_open_doc.document.0.0.7a3f4a97AZtyRK</param>
+    /// <param name="userId">userId和unionId二选一</param>
+    /// <param name="unionId">userId和unionId二选一</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public SendRobotInteractiveCardResponse SendSingleChatInteractiveCards(string accessToken, string cardBizId, object cardData, [CanBeNull] string userId, [CanBeNull] string unionId)
+    {
+        if (string.IsNullOrWhiteSpace(userId) && string.IsNullOrWhiteSpace(unionId))
+            throw new Exception("接收用户userId或者unionId不能为空");
+        SendRobotInteractiveCardHeaders sendRobotInteractiveCardHeaders = new SendRobotInteractiveCardHeaders();
+        sendRobotInteractiveCardHeaders.XAcsDingtalkAccessToken = accessToken;
+        SendRobotInteractiveCardRequest sendRobotInteractiveCardRequest = new SendRobotInteractiveCardRequest()
+        {
+            SingleChatReceiver = !string.IsNullOrWhiteSpace(userId) ? _jsonSerializer.Serialize(new { userId }) : _jsonSerializer.Serialize(new { unionId }),
+            CardTemplateId = "StandardCard",
+            CardData = _jsonSerializer.Serialize(cardData),
+            CardBizId = cardBizId,
+            RobotCode = _configuration.RobotCode
+        };
+
+        return DingtalkUtil.ExecuteAndCatchException(() => _client.SendRobotInteractiveCardWithOptions(sendRobotInteractiveCardRequest, sendRobotInteractiveCardHeaders, new RuntimeOptions()));
+    }
+}

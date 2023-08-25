@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>EasyAbp.NotificationService.Provider.Dingtalk</id>
+    <version>1.0.0</version>
+    <authors>EasyAbp.NotificationService.Provider.Dingtalk</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net7.0">
+        <dependency id="EasyAbp.NotificationService.Provider.Dingtalk.Abstractions" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="EasyAbp.NotificationService.Domain" version="2.3.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="/Users/choby/Documents/github/EasyAbp.NotificationService.Dingtalk/EasyAbp.NotificationService.Dingtalk/EasyAbp.NotificationService.Provider.Dingtalk/bin/Release/net7.0/EasyAbp.NotificationService.Provider.Dingtalk.dll" target="lib/net7.0/EasyAbp.NotificationService.Provider.Dingtalk.dll" />
+  </files>
+</package>
