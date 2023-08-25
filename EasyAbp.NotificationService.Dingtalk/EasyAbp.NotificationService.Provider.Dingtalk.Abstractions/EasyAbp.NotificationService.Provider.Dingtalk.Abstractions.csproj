@@ -6,6 +6,9 @@
         <Nullable>enable</Nullable>
         <RootNamespace>EasyAbp.NotificationService.Provider.Dingtalk</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.0.1</Version>
+        <PackageProjectUrl>https://github.com/choby/EasyAbp.NotificationService.Dingtalk</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/choby/EasyAbp.NotificationService.Dingtalk</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
