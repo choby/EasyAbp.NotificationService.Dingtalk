@@ -9,7 +9,7 @@
 dotnet add package EasyAbp.NotificationService.Provider.Dingtalk --version 1.0.0
 ```
 
-- 添加moduel依赖
+- 添加module依赖
 ```csharp
 [DependsOn(
     typeof(NotificationServiceProviderDingtalkModule)
