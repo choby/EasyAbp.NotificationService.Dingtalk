@@ -6,7 +6,7 @@
 
 - 安装EasyAbp.NotificationService.Provider.Dingtalk
 ```shell
-dotnet add package EasyAbp.NotificationService.Provider.Dingtalk --version 1.0.0
+dotnet add package EasyAbp.NotificationService.Provider.Dingtalk
 ```
 
 - 添加module依赖
