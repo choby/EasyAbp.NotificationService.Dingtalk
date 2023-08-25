@@ -113,6 +113,10 @@ var eto = await _dingtalkRobotInteractiveCardNotificationFactory.CreateAsync(new
                 await _localEventBus.PublishAsync(eto);
 ```
 
+通知效果：
+![image](https://github.com/choby/EasyAbp.NotificationService.Dingtalk/assets/13461239/e1ed982d-752e-4f41-856c-2b880f80629d)
+
+
 
 
 
