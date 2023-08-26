@@ -5,7 +5,7 @@
   },
   "projects": {
     "/Users/choby/Documents/github/EasyAbp.NotificationService.Dingtalk/EasyAbp.NotificationService.Dingtalk/EasyAbp.NotificationService.Provider.Dingtalk.Abstractions/EasyAbp.NotificationService.Provider.Dingtalk.Abstractions.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "restore": {
         "projectUniqueName": "/Users/choby/Documents/github/EasyAbp.NotificationService.Dingtalk/EasyAbp.NotificationService.Dingtalk/EasyAbp.NotificationService.Provider.Dingtalk.Abstractions/EasyAbp.NotificationService.Provider.Dingtalk.Abstractions.csproj",
         "projectName": "EasyAbp.NotificationService.Provider.Dingtalk.Abstractions",

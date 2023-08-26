@@ -1854,7 +1854,7 @@
           }
         }
       },
-      "EasyAbp.NotificationService.Provider.Dingtalk.Abstractions/1.0.0": {
+      "EasyAbp.NotificationService.Provider.Dingtalk.Abstractions/1.0.1": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
@@ -5387,7 +5387,7 @@
         "volo.abp.virtualfilesystem.nuspec"
       ]
     },
-    "EasyAbp.NotificationService.Provider.Dingtalk.Abstractions/1.0.0": {
+    "EasyAbp.NotificationService.Provider.Dingtalk.Abstractions/1.0.1": {
       "type": "project",
       "path": "../EasyAbp.NotificationService.Provider.Dingtalk.Abstractions/EasyAbp.NotificationService.Provider.Dingtalk.Abstractions.csproj",
       "msbuildProject": "../EasyAbp.NotificationService.Provider.Dingtalk.Abstractions/EasyAbp.NotificationService.Provider.Dingtalk.Abstractions.csproj"
@@ -5396,14 +5396,14 @@
   "projectFileDependencyGroups": {
     "net7.0": [
       "EasyAbp.NotificationService.Domain >= 2.3.0",
-      "EasyAbp.NotificationService.Provider.Dingtalk.Abstractions >= 1.0.0"
+      "EasyAbp.NotificationService.Provider.Dingtalk.Abstractions >= 1.0.1"
     ]
   },
   "packageFolders": {
     "/Users/choby/.nuget/packages/": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "restore": {
       "projectUniqueName": "/Users/choby/Documents/github/EasyAbp.NotificationService.Dingtalk/EasyAbp.NotificationService.Dingtalk/EasyAbp.NotificationService.Provider.Dingtalk/EasyAbp.NotificationService.Provider.Dingtalk.csproj",
       "projectName": "EasyAbp.NotificationService.Provider.Dingtalk",

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "WmMFWxWz9mzbh2ruB3bGqHwwBRVEyrjp02By+kl7Yf86IaP5x2NLQ171IKPXLllCFMeGQSzT/jJ3V0IGp9D/wg==",
+  "dgSpecHash": "FzSEOQyLpBSo4ibYpzHSj9MgZyLr/o2Sku5NzzGvTZSoJO/xva5pB/2kxZxJNDC4mNLN1EB6gWN/lb2b65AXIw==",
   "success": true,
   "projectFilePath": "/Users/choby/Documents/github/EasyAbp.NotificationService.Dingtalk/EasyAbp.NotificationService.Dingtalk/EasyAbp.NotificationService.Provider.Dingtalk/EasyAbp.NotificationService.Provider.Dingtalk.csproj",
   "expectedPackageFiles": [
