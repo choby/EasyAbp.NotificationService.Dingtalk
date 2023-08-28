@@ -53,12 +53,32 @@ public class DingtalkUserIdProvider : IDingtalkUserIdProvider , ITransientDepend
 ```
 
 
-- 发送消息, 注入DingtalkRobotInteractiveCardNotificationFactory
+- 发送消息, 实现工厂类并使用：
 ```csharp
-var eto = await _dingtalkRobotInteractiveCardNotificationFactory.CreateAsync(new DingtalkRobotInteractiveCardDataModel()
-                {
-                    CardBizId = "你的消息id",
-                    CardData = new
+
+public class YourNotificationFactory : NotificationFactory<YourData, CreateDingtalkRobotInteractiveCardNotificationEto>, ITransientDependency
+{
+    private ICurrentTenant _currentTenant;
+    private readonly IDingtalkInteractiveCardNotificationDataModelJsonSerializer _jsonSerializer; 
+    
+   
+
+    public SampleErrorDingtalkRobotInteractiveCardNotificationFactory(ICurrentTenant currentTenant, IDingtalkInteractiveCardNotificationDataModelJsonSerializer jsonSerializer)
+    {
+        _currentTenant = currentTenant;
+        _jsonSerializer = jsonSerializer;       
+    }
+
+    public override async Task<CreateDingtalkRobotInteractiveCardNotificationEto> CreateAsync(YourData model, 
+        IEnumerable<Guid> userIds)
+    {
+        var departments = await _openUserService.QueryDepartmentNamesAsync(new Guid[] { model.SampleErrorNotification.CreatorId!.Value });
+        var eto = new CreateDingtalkRobotInteractiveCardNotificationEto(_currentTenant.Id.GetValueOrDefault(),
+            userIds,
+            new DingtalkRobotInteractiveCardDataModel()
+            {
+                CardBizId = "your notification id",
+                CardData = new
                     {
                         config = new
                         {
@@ -109,10 +129,17 @@ var eto = await _dingtalkRobotInteractiveCardNotificationFactory.CreateAsync(new
                             }
                         }
                     }
-                }, userIds);
-                await _localEventBus.PublishAsync(eto);
+                }
+            }, _jsonSerializer);
+        return eto;
+    }
+}
+
 ```
 
+- 在业务层中调用YourNotificationFactory.CreateAsync()，得到eto并发布
+
+  
 通知效果：
 ![image](https://github.com/choby/EasyAbp.NotificationService.Dingtalk/assets/13461239/e1ed982d-752e-4f41-856c-2b880f80629d)
 
