@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageProjectUrl>https://github.com/choby/EasyAbp.NotificationService.Dingtalk</PackageProjectUrl>
         <RepositoryUrl>https://github.com/choby/EasyAbp.NotificationService.Dingtalk</RepositoryUrl>
-        <Version>1.0.1</Version>
+        <Version>2.6.0</Version>
+        <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="EasyAbp.NotificationService.Domain" Version="2.3.0" />
+      <PackageReference Include="EasyAbp.NotificationService.Domain" Version="2.6.0" />
     </ItemGroup>
 
     <ItemGroup>
