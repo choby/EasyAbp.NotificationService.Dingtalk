@@ -4,7 +4,7 @@ using Volo.Abp.MultiTenancy;
 namespace EasyAbp.NotificationService.Provider.Dingtalk;
 
 /// <summary>
-/// 钉钉通知
+/// 机器人互动卡片通知(普通版)
 /// </summary>
 public class CreateDingtalkRobotInteractiveCardNotificationEto : CreateNotificationInfoModel, IMultiTenant
 {
