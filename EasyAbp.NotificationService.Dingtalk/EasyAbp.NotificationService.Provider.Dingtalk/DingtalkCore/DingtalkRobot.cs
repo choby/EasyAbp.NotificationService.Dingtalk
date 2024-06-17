@@ -21,7 +21,8 @@ public class DingtalkRobot : IDingtalkRobot
         _client = new Client(new Config()
         {
             Protocol = "https",
-            RegionId = "central"
+            RegionId = "central",
+            DisableHttp2 = true
         });
     }
 
@@ -54,5 +55,88 @@ public class DingtalkRobot : IDingtalkRobot
         };
 
         return DingtalkUtil.ExecuteAndCatchException(() => _client.SendRobotInteractiveCardWithOptions(sendRobotInteractiveCardRequest, sendRobotInteractiveCardHeaders, new RuntimeOptions()));
+    }
+    
+    /// <summary>
+    /// 单聊机器人发送互动卡片（普通版）,https://open.dingtalk.com/document/orgapp/robots-send-interactive-cards
+    /// </summary>
+    /// <summary>
+    /// 调试地址：https://open-dev.dingtalk.com/apiExplorer?spm=ding_open_doc.document.0.0.225e7369tLbSB3#/?devType=org&api=im_1.0%23SendRobotInteractiveCard
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="dataModel"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public SendRobotInteractiveCardResponse SendRobotInteractiveCards(string accessToken, RobotInteractiveCardDataModel dataModel)
+    {
+        if (string.IsNullOrWhiteSpace(dataModel.SingleChatReceiver))
+            throw new Exception("接收用户不能为空");
+        SendRobotInteractiveCardHeaders sendRobotInteractiveCardHeaders = new SendRobotInteractiveCardHeaders();
+        sendRobotInteractiveCardHeaders.XAcsDingtalkAccessToken = accessToken;
+        SendRobotInteractiveCardRequest sendRobotInteractiveCardRequest = new SendRobotInteractiveCardRequest()
+        {
+            CardTemplateId =dataModel.CardTemplateId,
+            OpenConversationId = dataModel.OpenConversationId,
+            SingleChatReceiver = dataModel.SingleChatReceiver,
+            CardBizId = dataModel.CardBizId,
+            RobotCode =_configuration.RobotCode,
+            CallbackUrl = dataModel.CallbackUrl,
+            CardData = dataModel.CardData,
+            UserIdPrivateDataMap = dataModel.UserIdPrivateDataMap,
+            UnionIdPrivateDataMap =dataModel.UnionIdPrivateDataMap,
+            SendOptions = dataModel.SendOptions,
+            PullStrategy = dataModel.PullStrategy,
+        };
+
+        return DingtalkUtil.ExecuteAndCatchException(() => _client.SendRobotInteractiveCardWithOptions(sendRobotInteractiveCardRequest, sendRobotInteractiveCardHeaders, new RuntimeOptions()));
+    }
+    
+    /// <summary>
+    /// 发送互动卡片（高级版）,https://open.dingtalk.com/document/orgapp/send-interactive-dynamic-cards-1
+    /// </summary>
+    /// <summary>
+    /// 调试地址：https://open-dev.dingtalk.com/apiExplorer?spm=ding_open_doc.document.0.0.225e7369tLbSB3#/?devType=org&api=robot_1.0%23OrgGroupSend
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="dataModel"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public SendInteractiveCardResponse SendInteractiveCards(string accessToken, InteractiveCardDataModel dataModel)
+    {
+        SendInteractiveCardHeaders sendInteractiveCardHeaders = new SendInteractiveCardHeaders();
+        sendInteractiveCardHeaders.XAcsDingtalkAccessToken = accessToken;
+        SendInteractiveCardRequest sendRobotInteractiveCardRequest = new SendInteractiveCardRequest()
+        {
+            CardTemplateId = dataModel.CardTemplateId,
+            OpenConversationId = dataModel.OpenConversationId,
+            ReceiverUserIdList = dataModel.ReceiverUserIdList,
+            OutTrackId = dataModel.OutTrackId,
+            RobotCode = _configuration.RobotCode,
+            ConversationType = (int?)dataModel.ConversationType,
+            CallbackRouteKey = dataModel.CallbackRouteKey,
+            CardData = dataModel.CardData,
+            PrivateData = dataModel.PrivateData,
+            ChatBotId = dataModel.ChatBotId,
+            UserIdType = (int?)dataModel.UserIdType,
+            AtOpenIds = dataModel.AtOpenIds,
+            CardOptions = dataModel.CardOptions,
+            PullStrategy = dataModel.PullStrategy,
+        };
+
+        return DingtalkUtil.ExecuteAndCatchException(() => _client.SendInteractiveCardWithOptions(sendRobotInteractiveCardRequest, sendInteractiveCardHeaders, new RuntimeOptions()));
+    }
+    
+    public  UpdateInteractiveCardResponse UpdateInteractiveCard(string accessToken, 
+        UpdateInteractiveCardRequest updateInteractiveCardRequest, 
+        UpdateInteractiveCardRequest.UpdateInteractiveCardRequestCardOptions cardOptions = null)
+    {
+        UpdateInteractiveCardHeaders updateInteractiveCardHeaders = new UpdateInteractiveCardHeaders();
+        updateInteractiveCardHeaders.XAcsDingtalkAccessToken = accessToken;
+        updateInteractiveCardRequest.CardOptions = cardOptions ?? new UpdateInteractiveCardRequest.UpdateInteractiveCardRequestCardOptions()
+        {
+            UpdateCardDataByKey = true,
+            UpdatePrivateDataByKey = true,
+        };
+        return DingtalkUtil.ExecuteAndCatchException(() => _client.UpdateInteractiveCardWithOptions(updateInteractiveCardRequest, updateInteractiveCardHeaders, new RuntimeOptions()));
     }
 }

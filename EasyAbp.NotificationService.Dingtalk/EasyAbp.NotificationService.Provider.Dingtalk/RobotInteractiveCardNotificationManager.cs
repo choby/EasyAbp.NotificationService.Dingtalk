@@ -7,15 +7,15 @@ using Volo.Abp.Uow;
 
 namespace EasyAbp.NotificationService.Provider.Dingtalk;
 
-public class DingtalkRobotInteractiveCardNotificationManager : NotificationManagerBase
+public class RobotInteractiveCardNotificationManager : NotificationManagerBase
 {
     protected override string NotificationMethod =>
         NotificationProviderDingtalkConsts.RobotInteractiveCardNotificationMethod;
 
-    private IDingtalkInteractiveCardNotificationDataModelJsonSerializer DingtalkInteractiveCardNotificationDataModelJsonSerializer =>
-        LazyServiceProvider.LazyGetRequiredService<IDingtalkInteractiveCardNotificationDataModelJsonSerializer>();
-    protected IDingtalkInteractiveCardNotificationNotificationSender DingtalkInteractiveCardNotificationNotificationSender =>
-        LazyServiceProvider.LazyGetRequiredService<IDingtalkInteractiveCardNotificationNotificationSender>();
+    private IRobotInteractiveCardNotificationDataModelJsonSerializer RobotInteractiveCardNotificationDataModelJsonSerializer =>
+        LazyServiceProvider.LazyGetRequiredService<IRobotInteractiveCardNotificationDataModelJsonSerializer>();
+    protected IRobotInteractiveCardNotificationNotificationSender RobotInteractiveCardNotificationNotificationSender =>
+        LazyServiceProvider.LazyGetRequiredService<IRobotInteractiveCardNotificationNotificationSender>();
 
     protected IDingtalkUserIdProvider DingtalkUserIdProvider => LazyServiceProvider.LazyGetRequiredService<IDingtalkUserIdProvider>();
 
@@ -25,7 +25,7 @@ public class DingtalkRobotInteractiveCardNotificationManager : NotificationManag
         var notificationInfo = new NotificationInfo(GuidGenerator.Create(), CurrentTenant.Id);
 
         
-        notificationInfo.SetDingtalkRobotInteractiveCardNotificationData(model.GetDataModel(DingtalkInteractiveCardNotificationDataModelJsonSerializer), DingtalkInteractiveCardNotificationDataModelJsonSerializer);
+        notificationInfo.SetRobotInteractiveCardNotificationData(model.GetDataModel(RobotInteractiveCardNotificationDataModelJsonSerializer), RobotInteractiveCardNotificationDataModelJsonSerializer);
 
         var notifications = await CreateNotificationsAsync(notificationInfo, model.UserIds);
 
@@ -34,13 +34,13 @@ public class DingtalkRobotInteractiveCardNotificationManager : NotificationManag
 
     protected override async Task SendNotificationAsync(Notification notification, NotificationInfo notificationInfo)
     {
-        var dataModel = notificationInfo.GetDingtalkRobotInteractiveCardNotificationData(DingtalkInteractiveCardNotificationDataModelJsonSerializer);
+        var dataModel = notificationInfo.GetRobotInteractiveCardNotificationData(RobotInteractiveCardNotificationDataModelJsonSerializer);
 
         await SendTemplateMessageAsync(dataModel, notification);
     }
 
     [UnitOfWork]
-    protected virtual async Task SendTemplateMessageAsync(DingtalkRobotInteractiveCardDataModel dataModel, Notification notification)
+    protected virtual async Task SendTemplateMessageAsync(RobotInteractiveCardDataModel dataModel, Notification notification)
     {
         var openId = await ResolveOpenIdAsync(dataModel.AppId, notification.UserId);
 
@@ -53,7 +53,7 @@ public class DingtalkRobotInteractiveCardNotificationManager : NotificationManag
 
         try
         {
-            var response = await DingtalkInteractiveCardNotificationNotificationSender.SendAsync(openId, dataModel);
+            var response = await RobotInteractiveCardNotificationNotificationSender.SendAsync(openId, dataModel);
 
             if (response.StatusCode == 200)
             {

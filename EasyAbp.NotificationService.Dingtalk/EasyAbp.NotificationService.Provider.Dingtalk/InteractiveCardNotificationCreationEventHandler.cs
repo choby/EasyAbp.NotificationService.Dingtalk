@@ -6,15 +6,14 @@ using Volo.Abp.Uow;
 
 namespace EasyAbp.NotificationService.Provider.Dingtalk;
 
-public class DingtalkRobotInteractiveCardNotificationCreationEventHandler :NotificationCreationEventHandlerBase
+public class InteractiveCardNotificationCreationEventHandler : NotificationCreationEventHandlerBase
 {
     private readonly IUnitOfWorkManager _unitOfWorkManager;
     private readonly IServiceScopeFactory _serviceScopeFactory;
+    protected override string NotificationMethod => NotificationProviderDingtalkConsts.InteractiveCardNotificationMethod;
 
-    protected override string NotificationMethod => NotificationProviderDingtalkConsts.RobotInteractiveCardNotificationMethod;
 
-    
-    public DingtalkRobotInteractiveCardNotificationCreationEventHandler(IUnitOfWorkManager unitOfWorkManager, IServiceScopeFactory serviceScopeFactory)
+    public InteractiveCardNotificationCreationEventHandler(IUnitOfWorkManager unitOfWorkManager, IServiceScopeFactory serviceScopeFactory)
     {
         _unitOfWorkManager = unitOfWorkManager;
         _serviceScopeFactory = serviceScopeFactory;
@@ -25,16 +24,12 @@ public class DingtalkRobotInteractiveCardNotificationCreationEventHandler :Notif
         _unitOfWorkManager.Current.OnCompleted(async () =>
         {
             using var scope = _serviceScopeFactory.CreateScope();
-
             var backgroundJobManager = scope.ServiceProvider.GetRequiredService<IBackgroundJobManager>();
-
             await backgroundJobManager.EnqueueAsync(
-                new DingtalkInteractiveCardNotificationSendingJobArgs(eventData.Entity.TenantId,
+                new InteractiveCardNotificationSendingJobArgs(eventData.Entity.TenantId,
                     eventData.Entity.Id));
         });
 
         return Task.CompletedTask;
     }
-
-    
 }

@@ -6,7 +6,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageProjectUrl>https://github.com/choby/EasyAbp.NotificationService.Dingtalk</PackageProjectUrl>
         <RepositoryUrl>https://github.com/choby/EasyAbp.NotificationService.Dingtalk</RepositoryUrl>
-        <Version>2.6.0</Version>
+        <Version>2.6.5</Version>
         <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
     </PropertyGroup>
 

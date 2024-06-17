@@ -7,41 +7,41 @@ using Volo.Abp.Timing;
 
 namespace EasyAbp.NotificationService.Provider.Dingtalk
 {
-    public class DingtalkInteractiveCardDingtalkNotificationSendingJob : IAsyncBackgroundJob<DingtalkInteractiveCardNotificationSendingJobArgs>, ITransientDependency
+    public class InteractiveCardDingtalkNotificationSendingJob : IAsyncBackgroundJob<InteractiveCardNotificationSendingJobArgs>, ITransientDependency
     {
         private readonly INotificationInfoRepository _notificationInfoRepository;
         private readonly INotificationRepository _notificationRepository;
         private readonly ICurrentTenant _currentTenant;
 
-        private readonly DingtalkRobotInteractiveCardNotificationManager _dingtalkRobotInteractiveCardNotificationManager;
+        private readonly InteractiveCardNotificationManager _interactiveCardNotificationManager;
         //private readonly IRepository<NotificationInfo, Guid> _notificationInfoRepository;
         //private readonly IRepository<Notification, Guid> _notificationRepository;
 
-        public DingtalkInteractiveCardDingtalkNotificationSendingJob(
+        public InteractiveCardDingtalkNotificationSendingJob(
             IClock clock,
             //IRepository<NotificationInfo, Guid> notificationInfoRepository,
             //IRepository<Notification, Guid> notificationRepository, 
             INotificationInfoRepository notificationInfoRepository,
             INotificationRepository notificationRepository,
             ICurrentTenant currentTenant, 
-            DingtalkRobotInteractiveCardNotificationManager dingtalkRobotInteractiveCardNotificationManager)
+            InteractiveCardNotificationManager interactiveCardNotificationManager)
         {
            
             _notificationInfoRepository = notificationInfoRepository;
             _notificationRepository = notificationRepository;
             _currentTenant = currentTenant;
-            _dingtalkRobotInteractiveCardNotificationManager = dingtalkRobotInteractiveCardNotificationManager;
+            _interactiveCardNotificationManager = interactiveCardNotificationManager;
         }
 
         
-        public async Task ExecuteAsync(DingtalkInteractiveCardNotificationSendingJobArgs args)
+        public async Task ExecuteAsync(InteractiveCardNotificationSendingJobArgs args)
         {
             using var changeTenant = _currentTenant.Change(args.TenantId);
 
             var notification = await _notificationRepository.GetAsync(args.NotificationId);
             var notificationInfo = await _notificationInfoRepository.GetAsync(notification.NotificationInfoId);
 
-            await _dingtalkRobotInteractiveCardNotificationManager.SendNotificationsAsync(new List<Notification> { notification }, notificationInfo);
+            await _interactiveCardNotificationManager.SendNotificationsAsync(new List<Notification> { notification }, notificationInfo);
         }
     }
 }

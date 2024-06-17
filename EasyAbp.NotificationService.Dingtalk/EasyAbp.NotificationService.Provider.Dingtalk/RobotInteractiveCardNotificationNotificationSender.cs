@@ -5,13 +5,13 @@ using Volo.Abp.DependencyInjection;
 
 namespace EasyAbp.NotificationService.Provider.Dingtalk;
 
-public class DingtalkDingtalkInteractiveCardNotificationNotificationSender : IDingtalkInteractiveCardNotificationNotificationSender,ITransientDependency
+public class RobotInteractiveCardNotificationNotificationSender : IRobotInteractiveCardNotificationNotificationSender,ITransientDependency
 {
     protected IDingtalkOAuth DingtalkOAuth { get; }
     protected IDingtalkRobot DingtalkRobot { get; }
-    protected ILogger<DingtalkDingtalkInteractiveCardNotificationNotificationSender> Logger { get; }
+    protected ILogger<RobotInteractiveCardNotificationNotificationSender> Logger { get; }
     
-    public DingtalkDingtalkInteractiveCardNotificationNotificationSender(ILogger<DingtalkDingtalkInteractiveCardNotificationNotificationSender> logger, 
+    public RobotInteractiveCardNotificationNotificationSender(ILogger<RobotInteractiveCardNotificationNotificationSender> logger, 
         IDingtalkRobot dingtalkRobot, IDingtalkOAuth dingtalkOAuth)
     {
        
@@ -21,7 +21,7 @@ public class DingtalkDingtalkInteractiveCardNotificationNotificationSender : IDi
     }
 
    
-    public virtual async Task<SendRobotInteractiveCardResponse> SendAsync(string userId, DingtalkRobotInteractiveCardDataModel dataModel)
+    public virtual async Task<SendRobotInteractiveCardResponse> SendAsync(string userId, RobotInteractiveCardDataModel dataModel)
     {
         var accessTokenResponse = DingtalkOAuth.GetAccessToken();
         return DingtalkRobot.SendSingleChatInteractiveCards(accessTokenResponse.Body.AccessToken, dataModel.CardBizId, dataModel.CardData, userId, null);

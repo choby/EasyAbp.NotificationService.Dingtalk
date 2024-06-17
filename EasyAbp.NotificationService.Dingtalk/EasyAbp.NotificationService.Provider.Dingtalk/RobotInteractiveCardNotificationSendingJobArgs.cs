@@ -2,9 +2,9 @@
 
 namespace EasyAbp.NotificationService.Provider.Dingtalk
 {
-    public class DingtalkInteractiveCardNotificationSendingJobArgs : IMultiTenant
+    public class RobotInteractiveCardNotificationSendingJobArgs : IMultiTenant
     {
-        public DingtalkInteractiveCardNotificationSendingJobArgs(Guid? tenantId, Guid notificationId)
+        public RobotInteractiveCardNotificationSendingJobArgs(Guid? tenantId, Guid notificationId)
         {
             TenantId = tenantId;
             NotificationId = notificationId;

@@ -5,14 +5,14 @@
         <Nullable>enable</Nullable>
         <RootNamespace>EasyAbp.NotificationService.Provider.Dingtalk</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>2.6.0</Version>
+        <Version>2.6.5</Version>
         <PackageProjectUrl>https://github.com/choby/EasyAbp.NotificationService.Dingtalk</PackageProjectUrl>
         <RepositoryUrl>https://github.com/choby/EasyAbp.NotificationService.Dingtalk</RepositoryUrl>
         <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AlibabaCloud.SDK.Dingtalk" Version="2.1.12" />
+      <PackageReference Include="AlibabaCloud.SDK.Dingtalk" Version="2.1.22" />
       <PackageReference Include="EasyAbp.NotificationService.Domain.Shared" Version="2.6.0" />
     </ItemGroup>
 

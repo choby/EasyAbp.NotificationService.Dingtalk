@@ -5,23 +5,23 @@ using Volo.Abp.EventBus;
 
 namespace EasyAbp.NotificationService.Provider.Dingtalk
 {
-    public class CreateDingtalkInteractiveCardNotificationEventHandler : ILocalEventHandler<CreateDingtalkRobotInteractiveCardNotificationEto>, ITransientDependency
+    public class CreateRobotInteractiveCardNotificationEventHandler : ILocalEventHandler<CreateRobotInteractiveCardNotificationEto>, ITransientDependency
     {
-        private readonly DingtalkRobotInteractiveCardNotificationManager _dingtalkRobotInteractiveCardNotificationManager;
+        private readonly RobotInteractiveCardNotificationManager _robotInteractiveCardNotificationManager;
         private readonly INotificationInfoRepository _notificationInfoRepository;
         private readonly INotificationRepository _notificationRepository;
-        public CreateDingtalkInteractiveCardNotificationEventHandler(   INotificationInfoRepository notificationInfoRepository, 
-            DingtalkRobotInteractiveCardNotificationManager dingtalkRobotInteractiveCardNotificationManager, 
+        public CreateRobotInteractiveCardNotificationEventHandler(INotificationInfoRepository notificationInfoRepository, 
+            RobotInteractiveCardNotificationManager robotInteractiveCardNotificationManager, 
             INotificationRepository notificationRepository)
         {
             _notificationInfoRepository = notificationInfoRepository;
-            _dingtalkRobotInteractiveCardNotificationManager = dingtalkRobotInteractiveCardNotificationManager;
+            _robotInteractiveCardNotificationManager = robotInteractiveCardNotificationManager;
             _notificationRepository = notificationRepository;
         }
 
-        public virtual async Task HandleEventAsync(CreateDingtalkRobotInteractiveCardNotificationEto eventData)
+        public virtual async Task HandleEventAsync(CreateRobotInteractiveCardNotificationEto eventData)
         {
-            var result = await _dingtalkRobotInteractiveCardNotificationManager.CreateAsync(eventData);
+            var result = await _robotInteractiveCardNotificationManager.CreateAsync(eventData);
             
                 
                 await _notificationInfoRepository.InsertAsync(result.Item2, true);

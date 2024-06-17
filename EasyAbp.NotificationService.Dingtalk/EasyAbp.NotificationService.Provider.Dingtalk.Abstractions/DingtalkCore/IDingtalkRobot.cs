@@ -20,4 +20,37 @@ public interface IDingtalkRobot
     /// <exception cref="Exception"></exception>
     SendRobotInteractiveCardResponse SendSingleChatInteractiveCards(string accessToken, string cardBizId, object cardData, [CanBeNull] string userId, [CanBeNull] string unionId);
 
+    /// <summary>
+    /// 单聊机器人发送互动卡片（普通版）,https://open.dingtalk.com/document/orgapp/robots-send-interactive-cards
+    /// </summary>
+    /// <summary>
+    /// 调试地址：https://open-dev.dingtalk.com/apiExplorer?spm=ding_open_doc.document.0.0.225e7369tLbSB3#/?devType=org&api=im_1.0%23SendRobotInteractiveCard
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="dataModel"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    SendRobotInteractiveCardResponse SendRobotInteractiveCards(string accessToken, RobotInteractiveCardDataModel dataModel);
+
+    /// <summary>
+    /// 发送互动卡片（高级版）,https://open.dingtalk.com/document/orgapp/send-interactive-dynamic-cards-1
+    /// </summary>
+    /// <summary>
+    /// 调试地址：https://open-dev.dingtalk.com/apiExplorer?spm=ding_open_doc.document.0.0.225e7369tLbSB3#/?devType=org&api=robot_1.0%23OrgGroupSend
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="dataModel"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    SendInteractiveCardResponse SendInteractiveCards(string accessToken, InteractiveCardDataModel dataModel);
+    /// <summary>
+    /// 更新互动卡片, https://open.dingtalk.com/document/orgapp/update-dingtalk-interactive-cards
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="updateInteractiveCardRequest"></param>
+    /// <param name="cardOptions"></param>
+    /// <returns></returns>
+    UpdateInteractiveCardResponse UpdateInteractiveCard(string accessToken,
+        UpdateInteractiveCardRequest updateInteractiveCardRequest,
+        UpdateInteractiveCardRequest.UpdateInteractiveCardRequestCardOptions cardOptions = null);
 }

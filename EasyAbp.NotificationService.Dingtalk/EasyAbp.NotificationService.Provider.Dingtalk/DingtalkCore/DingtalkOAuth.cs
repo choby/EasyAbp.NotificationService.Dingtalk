@@ -16,7 +16,8 @@ public class DingtalkOAuth : IDingtalkOAuth
         _client = new Client(new Config()
         {
             Protocol = "https",
-            RegionId = "central"
+            RegionId = "central",
+            DisableHttp2 = true
         });
     }
 
@@ -63,6 +64,7 @@ public class DingtalkOAuth : IDingtalkOAuth
             //已创建的企业内部应用的AppSecret。
             AppSecret = _configuration.AppSecret,
         };
+
         return DingtalkUtil.ExecuteAndCatchException(() => _client.GetAccessToken(getUserTokenRequest));
     }
 }

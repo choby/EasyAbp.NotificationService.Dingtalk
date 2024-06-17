@@ -15,7 +15,7 @@ public class NotificationServiceProviderDingtalkModule : AbpModule
     {
         Configure<NotificationServiceOptions>(options =>
         {
-            options.Providers.AddProvider(new NotificationServiceProviderConfiguration(NotificationProviderDingtalkConsts.RobotInteractiveCardNotificationMethod, typeof(DingtalkRobotInteractiveCardNotificationManager)));
+            options.Providers.AddProvider(new NotificationServiceProviderConfiguration(NotificationProviderDingtalkConsts.RobotInteractiveCardNotificationMethod, typeof(RobotInteractiveCardNotificationManager)));
         });
         
         var configuration = context.Services.GetConfiguration();
