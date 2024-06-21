@@ -37,10 +37,10 @@ public class InteractiveCardNotificationNotificationSender : IInteractiveCardNot
         return DingtalkRobot.UpdateInteractiveCard(accessTokenResponse.Body.AccessToken, updateInteractiveCardRequest, cardOptions);
     }
     
-    public virtual async Task<CreateAndDeliverResponse> CreateAndDeliverCardsAsync(InteractiveCardDataModel dataModel)
+    public virtual async Task<CreateAndDeliverResponse> CreateAndDeliverCardsAsync(InteractiveCardDataModel dataModel, string userId = null)
     {
         var accessTokenResponse = DingtalkOAuth.GetAccessToken();
-        return DingtalkCard.CreateAndDeliverCards(accessTokenResponse.Body.AccessToken, dataModel);
+        return DingtalkCard.CreateAndDeliverCards(accessTokenResponse.Body.AccessToken, dataModel, userId);
     }
 
     public virtual async Task<UpdateCardResponse> UpdateCardsAsync(UpdateCardRequest updateCardRequest,

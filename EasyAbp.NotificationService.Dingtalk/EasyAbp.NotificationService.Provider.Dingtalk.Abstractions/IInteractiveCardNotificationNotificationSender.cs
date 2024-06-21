@@ -9,7 +9,7 @@ public interface IInteractiveCardNotificationNotificationSender
     Task<UpdateInteractiveCardResponse> UpdateAsync(UpdateInteractiveCardRequest updateInteractiveCardRequest,
         UpdateInteractiveCardRequest.UpdateInteractiveCardRequestCardOptions cardOptions = null);
 
-    Task< CreateAndDeliverResponse> CreateAndDeliverCardsAsync(InteractiveCardDataModel dataModel);
+    Task< CreateAndDeliverResponse> CreateAndDeliverCardsAsync(InteractiveCardDataModel dataModel, string userId = null);
 
     Task<UpdateCardResponse> UpdateCardsAsync(UpdateCardRequest updateCardRequest,
         UpdateCardRequest.UpdateCardRequestCardUpdateOptions updateCardRequestCardUpdateOptions = null);

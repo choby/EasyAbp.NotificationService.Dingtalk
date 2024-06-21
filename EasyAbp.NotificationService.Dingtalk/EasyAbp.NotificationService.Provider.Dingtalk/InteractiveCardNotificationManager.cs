@@ -28,7 +28,7 @@ public class InteractiveCardNotificationManager : NotificationManagerBase
 
         notificationInfo.SetInteractiveCardNotificationData(model.GetDataModel(InteractiveCardNotificationDataModelJsonSerializer), InteractiveCardNotificationDataModelJsonSerializer);
 
-        var notifications = await CreateNotificationsAsync(notificationInfo, model.UserIds);//model.UserIds
+        var notifications = await CreateNotificationsAsync(notificationInfo, model.UserIds); //model.UserIds
 
         return (notifications, notificationInfo);
     }
@@ -37,8 +37,18 @@ public class InteractiveCardNotificationManager : NotificationManagerBase
     public override async Task SendNotificationsAsync(List<Notification> notifications, NotificationInfo notificationInfo, bool autoUpdateWithRepository = true)
     {
         var dataModel = notificationInfo.GetInteractiveCardNotificationData(InteractiveCardNotificationDataModelJsonSerializer);
+        if (dataModel.ConversationType == ConversationType.Robot) //单聊
+        {
+            foreach (var notification in notifications)
+            {
+                await SendTemplateMessageAsync(dataModel, notification);
+            }
+        }
+        else //群聊
+        {
+            await SendTemplateMessageAsync(dataModel, notifications);
+        }
 
-        await SendTemplateMessageAsync(dataModel, notifications);
         if (autoUpdateWithRepository)
         {
             await NotificationRepository.UpdateManyAsync(notifications, true);
@@ -47,7 +57,31 @@ public class InteractiveCardNotificationManager : NotificationManagerBase
 
     protected override async Task SendNotificationAsync(Notification notification, NotificationInfo notificationInfo)
     {
-        
+    }
+
+    [UnitOfWork]
+    protected virtual async Task SendTemplateMessageAsync(InteractiveCardDataModel dataModel, Notification notification)
+    {
+        var openId = await ResolveOpenIdAsync(dataModel.AppId, notification.UserId);
+        try
+        {
+            var response = await InteractiveCardNotificationNotificationSender.CreateAndDeliverCardsAsync(dataModel, openId);
+
+            if (response.StatusCode == 200)
+            {
+                await SetNotificationResultAsync(notification, true);
+            }
+            else
+            {
+                await SetNotificationResultAsync(notification, false, $"[{response.StatusCode}] {response.Body.Result.DeliverResults[0].ErrorMsg}");
+            }
+        }
+        catch (Exception e)
+        {
+            Logger.LogException(e);
+            var message = e is IHasErrorCode b ? b.Code ?? e.Message : e.ToString();
+            await SetNotificationResultAsync(notification, false, message);
+        }
     }
 
     [UnitOfWork]
@@ -73,10 +107,10 @@ public class InteractiveCardNotificationManager : NotificationManagerBase
                 var openId = await ResolveOpenIdAsync(dataModel.AppId, Guid.Parse(atOpenId.Key));
                 atOpenIds.Add(openId, atOpenId.Value);
             }
-         
+
             dataModel.AtOpenIds = atOpenIds;
         }
-        
+
         try
         {
             var response = await InteractiveCardNotificationNotificationSender.CreateAndDeliverCardsAsync(dataModel);
