@@ -5,7 +5,7 @@ using Volo.Abp.EventBus;
 
 namespace EasyAbp.NotificationService.Provider.Dingtalk
 {
-    public class CreateInteractiveCardNotificationEventHandler : ILocalEventHandler<CreateInteractiveCardNotificationEto>, ITransientDependency
+    public class CreateInteractiveCardNotificationEventHandler : ILocalEventHandler<CreateInteractiveCardNotificationEto>, ILocalEventHandler<IEnumerable<CreateInteractiveCardNotificationEto>>,ITransientDependency
     {
         private readonly InteractiveCardNotificationManager _interactiveCardNotificationManager;
         private readonly INotificationInfoRepository _notificationInfoRepository;
@@ -22,15 +22,27 @@ namespace EasyAbp.NotificationService.Provider.Dingtalk
         public virtual async Task HandleEventAsync(CreateInteractiveCardNotificationEto eventData)
         {
             var result = await _interactiveCardNotificationManager.CreateAsync(eventData);
-            
+
+            await _notificationInfoRepository.InsertAsync(result.Item2, true);
+            foreach (var notification in result.Item1)
+            {
+                await _notificationRepository.InsertAsync(notification, true);
+            }
+
+        }
+
+        public virtual async Task HandleEventAsync(IEnumerable<CreateInteractiveCardNotificationEto> eventData)
+        {
+            foreach (var item in eventData)
+            {
+                var result = await _interactiveCardNotificationManager.CreateAsync(item);
                 
                 await _notificationInfoRepository.InsertAsync(result.Item2, true);
                 foreach (var notification in result.Item1)
                 {
                     await _notificationRepository.InsertAsync(notification, true);
                 }
-                
+            }
         }
-       
     }
 }

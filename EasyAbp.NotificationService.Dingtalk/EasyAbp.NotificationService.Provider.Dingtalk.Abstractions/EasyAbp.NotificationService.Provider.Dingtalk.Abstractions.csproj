@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <RootNamespace>EasyAbp.NotificationService.Provider.Dingtalk</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>2.6.5</Version>
+        <Version>2.6.6</Version>
         <PackageProjectUrl>https://github.com/choby/EasyAbp.NotificationService.Dingtalk</PackageProjectUrl>
         <RepositoryUrl>https://github.com/choby/EasyAbp.NotificationService.Dingtalk</RepositoryUrl>
         <TargetFrameworks>net7.0;net8.0</TargetFrameworks>

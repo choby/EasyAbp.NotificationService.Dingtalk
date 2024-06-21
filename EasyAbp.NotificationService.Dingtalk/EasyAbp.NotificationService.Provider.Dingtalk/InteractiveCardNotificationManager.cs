@@ -79,7 +79,7 @@ public class InteractiveCardNotificationManager : NotificationManagerBase
         
         try
         {
-            var response = await InteractiveCardNotificationNotificationSender.SendAsync(dataModel);
+            var response = await InteractiveCardNotificationNotificationSender.CreateAndDeliverCardsAsync(dataModel);
 
             if (response.StatusCode == 200)
             {
@@ -92,7 +92,7 @@ public class InteractiveCardNotificationManager : NotificationManagerBase
             {
                 foreach (var notification in notifications)
                 {
-                    await SetNotificationResultAsync(notification, false, $"[{response.StatusCode}] {response.Body.Result.ProcessQueryKey}");
+                    await SetNotificationResultAsync(notification, false, $"[{response.StatusCode}] {response.Body.Result.DeliverResults[0].ErrorMsg}");
                 }
             }
         }

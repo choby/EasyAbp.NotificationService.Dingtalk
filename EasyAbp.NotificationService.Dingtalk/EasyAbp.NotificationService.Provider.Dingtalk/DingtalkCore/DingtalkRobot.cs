@@ -114,8 +114,12 @@ public class DingtalkRobot : IDingtalkRobot
             RobotCode = _configuration.RobotCode,
             ConversationType = (int?)dataModel.ConversationType,
             CallbackRouteKey = dataModel.CallbackRouteKey,
-            CardData = dataModel.CardData,
-            PrivateData = dataModel.PrivateData,
+            // CardData = new SendInteractiveCardRequest.SendInteractiveCardRequestCardData()
+            // {
+            //     CardParamMap = dataModel.CardData.CardParamMap,
+            //     CardMediaIdParamMap = dataModel.CardData.CardParamMap
+            // },
+            // PrivateData = dataModel.PrivateData,
             ChatBotId = dataModel.ChatBotId,
             UserIdType = (int?)dataModel.UserIdType,
             AtOpenIds = dataModel.AtOpenIds,

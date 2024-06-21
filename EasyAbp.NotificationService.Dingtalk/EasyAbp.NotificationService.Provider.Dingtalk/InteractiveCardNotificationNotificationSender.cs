@@ -1,3 +1,4 @@
+using AlibabaCloud.SDK.Dingtalkcard_1_0.Models;
 using AlibabaCloud.SDK.Dingtalkim_1_0.Models;
 using EasyAbp.NotificationService.Provider.Dingtalk.DingtalkCore;
 using Microsoft.Extensions.Logging;
@@ -9,15 +10,17 @@ public class InteractiveCardNotificationNotificationSender : IInteractiveCardNot
 {
     protected IDingtalkOAuth DingtalkOAuth { get; }
     protected IDingtalkRobot DingtalkRobot { get; }
+    protected IDingtalkCard DingtalkCard { get; }
     protected ILogger<InteractiveCardNotificationNotificationSender> Logger { get; }
     
     public InteractiveCardNotificationNotificationSender(ILogger<InteractiveCardNotificationNotificationSender> logger, 
-        IDingtalkRobot dingtalkRobot, IDingtalkOAuth dingtalkOAuth)
+        IDingtalkRobot dingtalkRobot, IDingtalkOAuth dingtalkOAuth, IDingtalkCard dingtalkCard)
     {
        
         Logger = logger;
         DingtalkRobot = dingtalkRobot;
         DingtalkOAuth = dingtalkOAuth;
+        DingtalkCard = dingtalkCard;
     }
 
    
@@ -32,5 +35,18 @@ public class InteractiveCardNotificationNotificationSender : IInteractiveCardNot
     {
         var accessTokenResponse = DingtalkOAuth.GetAccessToken();
         return DingtalkRobot.UpdateInteractiveCard(accessTokenResponse.Body.AccessToken, updateInteractiveCardRequest, cardOptions);
+    }
+    
+    public virtual async Task<CreateAndDeliverResponse> CreateAndDeliverCardsAsync(InteractiveCardDataModel dataModel)
+    {
+        var accessTokenResponse = DingtalkOAuth.GetAccessToken();
+        return DingtalkCard.CreateAndDeliverCards(accessTokenResponse.Body.AccessToken, dataModel);
+    }
+
+    public virtual async Task<UpdateCardResponse> UpdateCardsAsync(UpdateCardRequest updateCardRequest,
+        UpdateCardRequest.UpdateCardRequestCardUpdateOptions updateCardRequestCardUpdateOptions = null)
+    {
+        var accessTokenResponse = DingtalkOAuth.GetAccessToken();
+        return DingtalkCard.UpdateCard(accessTokenResponse.Body.AccessToken, updateCardRequest, updateCardRequestCardUpdateOptions);
     }
 }

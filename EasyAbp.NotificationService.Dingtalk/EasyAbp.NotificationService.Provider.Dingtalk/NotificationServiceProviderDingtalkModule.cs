@@ -22,6 +22,7 @@ public class NotificationServiceProviderDingtalkModule : AbpModule
         context.Services.Configure<Configuration>(configuration.GetSection("Dingtalk"));
         context.Services.AddTransient<IDingtalkOAuth, DingtalkOAuth>();
         context.Services.AddTransient<IDingtalkRobot, DingtalkRobot>();
+        context.Services.AddTransient<IDingtalkCard, DingtalkCard>();
         context.Services.AddTransient<IDingtalkContact, DingtalkContact>();
     }
 }
