@@ -27,7 +27,7 @@ public class RobotInteractiveCardNotificationManager : NotificationManagerBase
         
         notificationInfo.SetRobotInteractiveCardNotificationData(model.GetDataModel(RobotInteractiveCardNotificationDataModelJsonSerializer), RobotInteractiveCardNotificationDataModelJsonSerializer);
 
-        var notifications = await CreateNotificationsAsync(notificationInfo, model.UserIds);
+        var notifications = await CreateNotificationsAsync(notificationInfo, model);
 
         return (notifications, notificationInfo);
     }

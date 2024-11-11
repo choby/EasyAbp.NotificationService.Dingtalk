@@ -28,7 +28,7 @@ public class InteractiveCardNotificationManager : NotificationManagerBase
 
         notificationInfo.SetInteractiveCardNotificationData(model.GetDataModel(InteractiveCardNotificationDataModelJsonSerializer), InteractiveCardNotificationDataModelJsonSerializer);
 
-        var notifications = await CreateNotificationsAsync(notificationInfo, model.UserIds); //model.UserIds
+        var notifications = await CreateNotificationsAsync(notificationInfo, model); //model.UserIds
 
         return (notifications, notificationInfo);
     }
